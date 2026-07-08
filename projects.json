@@ -1,0 +1,164 @@
+[
+  {
+    "id": "cgm",
+    "title": "CGM 持续血糖监测系统",
+    "category": "mobile",
+    "status": "online",
+    "company": "三诺生物",
+    "period": "2020.05 - 至今",
+    "summary": "医疗级血糖监测 App，通过 BLE 协议与皮下传感器实时通信，实现血糖数据采集、趋势图表展示、高低血糖预警等功能。",
+    "description": "基于 Android 平台开发的医疗级持续血糖监测（CGM）系统 App。通过蓝牙低功耗（BLE）协议与皮下传感器实时通信，实现血糖数据的实时采集、解析、存储与可视化展示。产品从 0 到 1 全程参与，负责 App 端整体架构设计与核心功能开发。",
+    "features": [
+      "BLE 蓝牙低功耗协议对接，与硬件/固件工程师协作完成医疗设备数据通信链路设计",
+      "血糖传感器实时数据接收、解析、存储与展示，保障数据传输稳定性与准确性",
+      "从 MVP 架构向 MVVM 架构迁移，引入 LiveData + ViewModel + Room",
+      "集成血糖预测、高低血糖预警等核心算法模块",
+      "蓝牙通信协议文档编写与版本迭代，处理不同芯片方案兼容性",
+      "UI 逐步迁移至 Jetpack Compose"
+    ],
+    "techStack": ["Kotlin", "Java", "BLE", "MVVM", "Room", "Retrofit", "OkHttp", "Coroutines", "Flow", "Jetpack Compose", "Dagger", "Hilt", "LiveData", "ViewModel"],
+    "highlights": ["医疗合规", "蓝牙协议栈", "0→1 全流程", "架构演进"],
+    "screenshots": [],
+    "download": {
+      "github": "",
+      "apk": ""
+    }
+  },
+  {
+    "id": "bangzhaobiao",
+    "title": "邦招标",
+    "category": "crossplat",
+    "status": "completed",
+    "company": "正邦集团",
+    "period": "2019.01 - 2020.04",
+    "summary": "基于 Flutter 跨平台框架独立开发的招标信息聚合 App，覆盖 Android / iOS 双端。",
+    "description": "使用 Flutter 跨平台框架从 0 到 1 独立完成开发的招标信息聚合应用。负责需求分析、技术调研、进度管理、全功能开发，为部门技术储备奠定基础。",
+    "features": [
+      "Flutter 跨平台开发，一套代码覆盖 Android + iOS 双端",
+      "招标信息聚合与检索",
+      "独立完成需求分析、技术调研到全功能开发的全流程",
+      "为公司 Flutter 技术栈落地提供先行经验"
+    ],
+    "techStack": ["Flutter", "Dart", "RESTful API"],
+    "highlights": ["独立交付", "双端覆盖", "技术选型"],
+    "screenshots": [],
+    "download": {
+      "github": "",
+      "apk": ""
+    }
+  },
+  {
+    "id": "bangscm",
+    "title": "正邦 SCM（供应链管理）",
+    "category": "crossplat",
+    "status": "completed",
+    "company": "正邦集团",
+    "period": "2018.06 - 2020.04",
+    "summary": "正邦内部供应链管理系统，支持合同明细查询与供应商管理，跨平台 App 端开发。",
+    "description": "正邦集团内部供应链管理系统，通过 Weex + Vue.js 实现跨平台 App 功能。负责前端 App 功能开发及与后端接口的对接联调。",
+    "features": [
+      "合同明细查询与管理",
+      "供应商信息管理",
+      "Weex + Vue.js 跨平台方案",
+      "与后端系统接口对接联调"
+    ],
+    "techStack": ["Weex", "Vue.js", "Android"],
+    "highlights": ["企业级应用", "供应链管理"],
+    "screenshots": [],
+    "download": {
+      "github": "",
+      "apk": ""
+    }
+  },
+  {
+    "id": "bangyingxiao",
+    "title": "邦营销",
+    "category": "crossplat",
+    "status": "completed",
+    "company": "正邦集团",
+    "period": "2018.02 - 2018.06",
+    "summary": "帮助正邦集团营销人员提升效率的移动端工具，Weex + Vue.js 跨平台开发。",
+    "description": "面向正邦集团营销团队的移动端效率工具。完成核心功能模块开发、通用组件封装、项目维护优化。使用 Weex + Vue.js + Node.js 技术栈。",
+    "features": [
+      "核心功能模块开发",
+      "通用组件封装提升复用性",
+      "营销团队移动办公支持"
+    ],
+    "techStack": ["Weex", "Vue.js", "Node.js"],
+    "highlights": ["组件化", "团队效能"],
+    "screenshots": [],
+    "download": {
+      "github": "",
+      "apk": ""
+    }
+  },
+  {
+    "id": "bangyangzhu",
+    "title": "邦养猪",
+    "category": "mobile",
+    "status": "completed",
+    "company": "正邦集团",
+    "period": "2017.10 - 2018.02",
+    "summary": "科学化猪场管理 App，覆盖养殖全流程数据采集与分析，Android 原生开发。",
+    "description": "正邦集团科学化猪场管理应用，覆盖养殖全流程的数据采集与分析。负责核心模块开发与项目维护。",
+    "features": [
+      "养殖全流程数据采集",
+      "数据分析与可视化",
+      "Android 原生开发",
+      "科学化养殖管理"
+    ],
+    "techStack": ["Android", "Java", "MySQL"],
+    "highlights": ["行业应用", "数据驱动"],
+    "screenshots": [],
+    "download": {
+      "github": "",
+      "apk": ""
+    }
+  },
+  {
+    "id": "haolian",
+    "title": "浩联全球购",
+    "category": "mobile",
+    "status": "completed",
+    "company": "星宇时空",
+    "period": "2016.09 - 2016.12",
+    "summary": "大型在线商城 App，通过消费积分机制提升用户粘性，独立完成 75% 功能开发。",
+    "description": "面向消费者的大型在线商城应用，通过消费积分机制提升用户粘性。独立完成 75% 以上功能开发及基础模块封装。",
+    "features": [
+      "在线商城完整功能",
+      "消费积分机制提升用户粘性",
+      "独立完成 75% 功能开发",
+      "基础模块封装，提升开发效率"
+    ],
+    "techStack": ["Android", "Java", "SQLite"],
+    "highlights": ["独立开发", "电商系统"],
+    "screenshots": [],
+    "download": {
+      "github": "",
+      "apk": ""
+    }
+  },
+  {
+    "id": "vrspace",
+    "title": "VR 空间",
+    "category": "mobile",
+    "status": "completed",
+    "company": "星宇时空",
+    "period": "2016.05 - 2017.04",
+    "summary": "VR 内容展示与交互商用 App，担任 Android 开发组长，负责整体框架搭建。",
+    "description": "担任 Android 开发小组组长，负责项目整体框架搭建与基础功能封装。主导开发商用 VR 应用。",
+    "features": [
+      "担任 Android 开发组长",
+      "项目整体框架搭建",
+      "基础功能封装",
+      "VR 内容展示与交互"
+    ],
+    "techStack": ["Android", "Java"],
+    "highlights": ["团队管理", "框架搭建"],
+    "screenshots": [],
+    "download": {
+      "github": "",
+      "apk": ""
+    }
+  }
+]

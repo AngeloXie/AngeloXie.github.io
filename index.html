@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>谢雨耕 - Android 开发作品集</title>
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --bg-secondary: #F6F5F4;
+    --bg-tertiary: #F0EFEC;
+    --text: #1A1A1A;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --border: #E5E3DE;
+    --border-hover: #CCC9C2;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-mono: "SF Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+
+    --c-mobile: #1D9E75;
+    --c-mobile-bg: #E1F5EE;
+    --c-crossplat: #BA7517;
+    --c-crossplat-bg: #FAEEDA;
+    --c-miniapp: #378ADD;
+    --c-miniapp-bg: #E6F1FB;
+    --c-ai: #E24B4A;
+    --c-ai-bg: #FCEBEB;
+    --c-auto: #888780;
+    --c-auto-bg: #F1EFE8;
+    --c-framework: #7F77DD;
+    --c-framework-bg: #EEEDFE;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    text-align: center;
+    padding: 64px 0 40px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .hero-avatar {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--c-mobile-bg); color: var(--c-mobile);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 500; margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 500; margin-bottom: 4px; }
+  .hero .subtitle { font-size: 16px; color: var(--text-secondary); margin-bottom: 6px; }
+  .hero .meta { font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px; }
+  .hero .exp-badge {
+    display: inline-block; font-size: 13px; padding: 5px 16px;
+    border-radius: 20px; background: var(--c-framework-bg); color: var(--c-framework);
+    font-weight: 500; margin-bottom: 16px;
+  }
+
+  .skill-tags {
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 8px;
+  }
+  .skill-tags span {
+    font-size: 12px; padding: 3px 12px; border-radius: 20px;
+    background: var(--bg-secondary); border: 0.5px solid var(--border);
+  }
+
+  /* ---------- Category Tabs ---------- */
+  .tabs {
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+    padding: 32px 0 24px; position: sticky; top: 0; z-index: 10;
+    background: var(--bg);
+  }
+  .tab {
+    font-size: 13px; padding: 7px 18px; border-radius: 20px; cursor: pointer;
+    border: 0.5px solid var(--border); background: var(--bg);
+    transition: all 0.15s ease; font-family: var(--font-sans);
+    white-space: nowrap;
+  }
+  .tab:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
+  .tab.active { border-color: transparent; font-weight: 500; }
+  .tab[data-cat="all"].active { background: #3C3489; color: #fff; border-color: #3C3489; }
+  .tab[data-cat="mobile"].active { background: var(--c-mobile-bg); color: var(--c-mobile); border-color: var(--c-mobile); }
+  .tab[data-cat="crossplat"].active { background: var(--c-crossplat-bg); color: var(--c-crossplat); border-color: var(--c-crossplat); }
+  .tab[data-cat="miniapp"].active { background: var(--c-miniapp-bg); color: var(--c-miniapp); border-color: var(--c-miniapp); }
+  .tab[data-cat="ai"].active { background: var(--c-ai-bg); color: var(--c-ai); border-color: var(--c-ai); }
+  .tab[data-cat="auto"].active { background: var(--c-auto-bg); color: var(--c-auto); border-color: var(--c-auto); }
+  .tab[data-cat="framework"].active { background: var(--c-framework-bg); color: var(--c-framework); border-color: var(--c-framework); }
+
+  .tab .count {
+    font-size: 11px; margin-left: 4px; opacity: 0.6;
+  }
+
+  /* ---------- Project Grid ---------- */
+  .section-title {
+    font-size: 15px; font-weight: 500; margin-bottom: 16px; color: var(--text);
+  }
+  .empty-state {
+    text-align: center; padding: 64px 24px; color: var(--text-tertiary);
+  }
+  .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-state p { font-size: 14px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px; padding-bottom: 48px;
+  }
+
+  .card {
+    background: var(--bg); border-radius: var(--radius);
+    border: 0.5px solid var(--border); overflow: hidden;
+    cursor: pointer; transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+
+  .card-thumb {
+    height: 160px; background: var(--bg-secondary);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .card-thumb .placeholder {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .card-thumb .placeholder-icon { font-size: 36px; opacity: 0.3; }
+  .card-thumb .placeholder-text { font-size: 12px; color: var(--text-tertiary); }
+
+  .card-thumb .category-tag {
+    position: absolute; top: 12px; left: 12px;
+    font-size: 12px; padding: 4px 12px; border-radius: 12px;
+    font-weight: 500;
+  }
+  .cat-mobile .category-tag { background: var(--c-mobile-bg); color: var(--c-mobile); }
+  .cat-crossplat .category-tag { background: var(--c-crossplat-bg); color: var(--c-crossplat); }
+  .cat-miniapp .category-tag { background: var(--c-miniapp-bg); color: var(--c-miniapp); }
+  .cat-ai .category-tag { background: var(--c-ai-bg); color: var(--c-ai); }
+  .cat-auto .category-tag { background: var(--c-auto-bg); color: var(--c-auto); }
+  .cat-framework .category-tag { background: var(--c-framework-bg); color: var(--c-framework); }
+
+  .card-body { padding: 16px 18px; }
+  .card-body .company { font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px; }
+  .card-body h3 { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+  .card-body .summary { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
+  .card-body .tech-row {
+    display: flex; gap: 4px; flex-wrap: wrap;
+  }
+  .card-body .tech-row span {
+    font-size: 11px; padding: 2px 8px; border-radius: 4px;
+    background: var(--bg-secondary); color: var(--text-secondary);
+  }
+
+  /* ---------- Detail Panel ---------- */
+  .detail-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.25); z-index: 100;
+    justify-content: center; align-items: flex-start;
+    padding: 40px 16px; overflow-y: auto;
+  }
+  .detail-overlay.open { display: flex; }
+
+  .detail-panel {
+    background: var(--bg); border-radius: var(--radius);
+    max-width: 700px; width: 100%; position: relative;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+    animation: slideUp 0.2s ease;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .detail-header {
+    padding: 24px 28px 0; display: flex; justify-content: space-between;
+    align-items: flex-start;
+  }
+  .detail-header h2 { font-size: 20px; font-weight: 500; }
+  .detail-header .close-btn {
+    width: 32px; height: 32px; border-radius: 50%; border: 0.5px solid var(--border);
+    background: var(--bg); cursor: pointer; display: flex; align-items: center;
+    justify-content: center; font-size: 16px; color: var(--text-secondary);
+    transition: all 0.15s; flex-shrink: 0;
+  }
+  .detail-header .close-btn:hover { background: var(--bg-secondary); }
+
+  .detail-meta { padding: 4px 28px 0; font-size: 13px; color: var(--text-tertiary); }
+  .detail-body { padding: 20px 28px 28px; }
+
+  .detail-section { margin-bottom: 20px; }
+  .detail-section h4 {
+    font-size: 14px; font-weight: 500; margin-bottom: 8px;
+    color: var(--text);
+  }
+  .detail-section ul {
+    list-style: none; padding: 0;
+  }
+  .detail-section ul li {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.7;
+    padding: 3px 0; padding-left: 16px; position: relative;
+  }
+  .detail-section ul li::before {
+    content: ""; position: absolute; left: 0; top: 10px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--c-mobile);
+  }
+
+  .detail-tags {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .detail-tags span {
+    font-size: 12px; padding: 4px 12px; border-radius: 6px;
+    background: var(--bg-secondary); border: 0.5px solid var(--border);
+  }
+
+  .detail-highlights {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px;
+  }
+  .detail-highlights span {
+    font-size: 12px; padding: 3px 10px; border-radius: 12px;
+    background: var(--c-framework-bg); color: var(--c-framework);
+    font-weight: 500;
+  }
+
+  .detail-actions {
+    display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;
+  }
+  .detail-actions .btn {
+    font-size: 13px; padding: 8px 20px; border-radius: var(--radius-sm);
+    border: 0.5px solid var(--border); cursor: pointer; font-family: var(--font-sans);
+    background: var(--bg); transition: all 0.15s; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px; color: var(--text);
+  }
+  .detail-actions .btn:hover { background: var(--bg-secondary); border-color: var(--border-hover); }
+  .detail-actions .btn.primary {
+    background: var(--c-framework); color: #fff; border-color: var(--c-framework);
+  }
+  .detail-actions .btn.primary:hover { opacity: 0.9; }
+  .detail-actions .btn:disabled {
+    opacity: 0.35; cursor: not-allowed; pointer-events: none;
+  }
+
+  /* ---------- Footer ---------- */
+  .footer {
+    text-align: center; padding: 32px 24px;
+    border-top: 0.5px solid var(--border);
+    font-size: 13px; color: var(--text-tertiary);
+  }
+  .footer .links { display: flex; gap: 16px; justify-content: center; margin-bottom: 8px; }
+  .footer .links a { color: var(--text-secondary); text-decoration: none; }
+  .footer .links a:hover { color: var(--text); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 720px) {
+    .hero { padding: 40px 0 28px; }
+    .hero h1 { font-size: 22px; }
+    .grid { grid-template-columns: 1fr; }
+    .detail-panel { max-width: 100%; border-radius: var(--radius) var(--radius) 0 0; }
+    .detail-overlay { align-items: flex-end; padding: 0; }
+    .tabs { gap: 4px; padding: 20px 0 16px; }
+    .tab { font-size: 12px; padding: 5px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====== Hero ====== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-avatar">X</div>
+    <h1>谢雨耕</h1>
+    <p class="subtitle">移动端全栈开发工程师</p>
+    <p class="meta">Android · 跨平台 · 医疗 IoT · BLE 蓝牙</p>
+    <div class="exp-badge">11 年开发经验</div>
+    <div class="skill-tags">
+      <span>Kotlin</span><span>Java</span><span>Flutter / Dart</span>
+      <span>Jetpack Compose</span><span>BLE 蓝牙</span><span>MVVM</span>
+      <span>Weex / Vue.js</span><span>微信小程序</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====== Tabs ====== -->
+<div class="tabs" id="tabs">
+  <span class="tab active" data-cat="all">全部<span class="count" id="count-all"></span></span>
+  <span class="tab" data-cat="mobile">移动端<span class="count" id="count-mobile"></span></span>
+  <span class="tab" data-cat="crossplat">跨平台<span class="count" id="count-crossplat"></span></span>
+  <span class="tab" data-cat="miniapp">小程序<span class="count" id="count-miniapp"></span></span>
+  <span class="tab" data-cat="ai">AI<span class="count" id="count-ai"></span></span>
+  <span class="tab" data-cat="auto">车载<span class="count" id="count-auto"></span></span>
+  <span class="tab" data-cat="framework">Framework<span class="count" id="count-framework"></span></span>
+</div>
+
+<!-- ====== Projects ====== -->
+<div class="container">
+  <div class="grid" id="projectGrid"></div>
+  <div class="empty-state" id="emptyState" style="display:none">
+    <div class="icon">--</div>
+    <p>该板块暂无项目，敬请期待</p>
+  </div>
+</div>
+
+<!-- ====== Detail Overlay ====== -->
+<div class="detail-overlay" id="detailOverlay" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-panel" id="detailPanel"></div>
+</div>
+
+<!-- ====== Footer ====== -->
+<div class="footer">
+  <div class="links">
+    <span>150-7908-4610</span>
+    <span>1010693590@qq.com</span>
+    <span>长沙 / 南昌</span>
+  </div>
+  <p>2026 谢雨耕</p>
+</div>
+
+<script>
+// ====== Data ======
+const categoryMap = {
+  all:    { label: '全部',      cls: '' },
+  mobile:   { label: '移动端',    cls: 'cat-mobile' },
+  crossplat:{ label: '跨平台',    cls: 'cat-crossplat' },
+  miniapp:  { label: '小程序',    cls: 'cat-miniapp' },
+  ai:       { label: 'AI',        cls: 'cat-ai' },
+  auto:     { label: '车载',      cls: 'cat-auto' },
+  framework:{ label: 'Framework', cls: 'cat-framework' }
+};
+
+const categoryIcons = {
+  mobile: '<svg width="36" height="36" viewBox="0 0 36 36"><rect x="10" y="3" width="16" height="30" rx="3" stroke="#1D9E75" stroke-width="1.2" fill="none"/><line x1="14" y1="28" x2="22" y2="28" stroke="#1D9E75" stroke-width="1.2"/></svg>',
+  crossplat: '<svg width="36" height="36" viewBox="0 0 36 36"><rect x="5" y="5" width="26" height="26" rx="4" stroke="#BA7517" stroke-width="1.2" fill="none"/><rect x="12" y="10" width="12" height="16" rx="2" stroke="#BA7517" stroke-width="1.2" fill="none"/></svg>',
+  miniapp: '<svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="13" stroke="#378ADD" stroke-width="1.2" fill="none"/><circle cx="18" cy="18" r="5" stroke="#378ADD" stroke-width="1.2" fill="none"/></svg>',
+  ai: '<svg width="36" height="36" viewBox="0 0 36 36"><polygon points="18,2 22,12 33,12 24,18 28,28 18,22 8,28 12,18 3,12 14,12" stroke="#E24B4A" stroke-width="1.2" fill="none" stroke-linejoin="round"/></svg>',
+  auto: '<svg width="36" height="36" viewBox="0 0 36 36"><rect x="4" y="12" width="28" height="14" rx="4" stroke="#888780" stroke-width="1.2" fill="none"/><circle cx="11" cy="26" r="3" stroke="#888780" stroke-width="1.2" fill="none"/><circle cx="25" cy="26" r="3" stroke="#888780" stroke-width="1.2" fill="none"/></svg>',
+  framework: '<svg width="36" height="36" viewBox="0 0 36 36"><rect x="3" y="3" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/><rect x="21" y="3" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/><rect x="3" y="21" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/><rect x="21" y="21" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/></svg>'
+};
+
+let projects = [];
+let activeCat = 'all';
+
+// ====== Load ======
+fetch('projects.json')
+  .then(r => r.json())
+  .then(data => {
+    projects = data;
+    updateCounts();
+    render();
+  })
+  .catch(err => {
+    console.error('Failed to load projects:', err);
+    document.getElementById('projectGrid').innerHTML =
+      '<div class="empty-state"><div class="icon">!</div><p>加载项目数据失败，请检查 projects.json</p></div>';
+  });
+
+// ====== Tabs ======
+document.getElementById('tabs').addEventListener('click', e => {
+  if (e.target.classList.contains('tab')) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    e.target.classList.add('active');
+    activeCat = e.target.dataset.cat;
+    render();
+  }
+});
+
+// ====== Counts ======
+function updateCounts() {
+  const counts = { all: projects.length };
+  projects.forEach(p => {
+    counts[p.category] = (counts[p.category] || 0) + 1;
+  });
+  ['all','mobile','crossplat','miniapp','ai','auto','framework'].forEach(cat => {
+    const el = document.getElementById('count-' + cat);
+    if (el) el.textContent = '(' + (counts[cat] || 0) + ')';
+  });
+}
+
+// ====== Render ======
+function render() {
+  const filtered = activeCat === 'all'
+    ? projects
+    : projects.filter(p => p.category === activeCat);
+
+  const grid = document.getElementById('projectGrid');
+  const empty = document.getElementById('emptyState');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  grid.innerHTML = filtered.map(p => {
+    const cat = categoryMap[p.category] || categoryMap.mobile;
+    const techs = (p.techStack || []).slice(0, 5).map(t => `<span>${t}</span>`).join('');
+    const icon = categoryIcons[p.category] || categoryIcons.mobile;
+
+    return `
+    <div class="card ${cat.cls}" onclick='openDetail("${p.id}")'>
+      <div class="card-thumb">
+        <span class="category-tag">${cat.label}</span>
+        <div class="placeholder">${icon}<span class="placeholder-text">点击查看详情</span></div>
+      </div>
+      <div class="card-body">
+        <div class="company">${p.company} · ${p.period}</div>
+        <h3>${p.title}</h3>
+        <p class="summary">${p.summary}</p>
+        <div class="tech-row">${techs}${(p.techStack||[]).length > 5 ? `<span>+${p.techStack.length - 5}</span>` : ''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ====== Detail ======
+function openDetail(id) {
+  const p = projects.find(x => x.id === id);
+  if (!p) return;
+
+  const cat = categoryMap[p.category] || categoryMap.mobile;
+  const hasGithub = p.download && p.download.github;
+  const hasApk = p.download && p.download.apk;
+
+  const features = (p.features || []).map(f => `<li>${f}</li>`).join('');
+  const techTags = (p.techStack || []).map(t => `<span>${t}</span>`).join('');
+  const highlights = (p.highlights || []).map(h => `<span>${h}</span>`).join('');
+
+  document.getElementById('detailPanel').innerHTML = `
+    <div class="detail-header">
+      <div>
+        <span class="category-tag cat-${p.category}" style="font-size:12px;padding:3px 10px;border-radius:12px;font-weight:500;display:inline-block;margin-bottom:6px;">${cat.label}</span>
+        <h2>${p.title}</h2>
+      </div>
+      <button class="close-btn" onclick="closeDetail()">&times;</button>
+    </div>
+    <div class="detail-meta">${p.company} · ${p.period}</div>
+    <div class="detail-body">
+      ${highlights ? `<div class="detail-highlights">${highlights}</div>` : ''}
+      <div class="detail-section">
+        <h4>项目概述</h4>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">${p.description}</p>
+      </div>
+      <div class="detail-section">
+        <h4>功能亮点</h4>
+        <ul>${features}</ul>
+      </div>
+      <div class="detail-section">
+        <h4>技术栈</h4>
+        <div class="detail-tags">${techTags}</div>
+      </div>
+      <div class="detail-actions">
+        ${hasGithub
+          ? `<a class="btn primary" href="${p.download.github}" target="_blank" rel="noopener">GitHub 源码</a>`
+          : `<span class="btn primary" disabled>GitHub 源码（暂未公开）</span>`}
+        ${hasApk
+          ? `<a class="btn" href="${p.download.apk}" target="_blank" rel="noopener">下载 APK</a>`
+          : `<span class="btn" disabled>APK 下载（暂未提供）</span>`}
+      </div>
+    </div>`;
+
+  document.getElementById('detailOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDetail() {
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDetail();
+});
+</script>
+</body>
+</html>
