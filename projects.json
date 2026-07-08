@@ -1,5 +1,34 @@
 [
   {
+    "id": "minuteclinic",
+    "title": "分钟诊所 Android 2.0",
+    "category": "mobile",
+    "status": "online",
+    "company": "三诺生物",
+    "period": "2020.05 - 至今",
+    "summary": "面向基层诊所的医疗健康服务 App，覆盖患者建档、慢病检测、设备连接、视频问诊、电子处方等完整诊疗闭环，并引入 AI Agent 驱动自然语言快捷操作。",
+    "description": "面向基层诊所、门店、医生和健康管理师的 Android 医疗健康服务 App。项目围绕患者建档、健康检测、报告解读、设备连接、随访转诊、视频问诊、电子处方等核心流程，提供从患者管理到检测采集、服务跟进、处方流转的移动端闭环能力。项目主体采用 MVP 多模块架构，并逐步引入 Kotlin、Hilt、MVVM、Room、协程与 AI Agent 新架构能力。",
+    "features": [
+      "患者建档、基础信息、健康档案、家庭成员、生活方式和用药信息管理",
+      "覆盖血糖、血压、血脂、尿酸、糖化、铁蛋白、CGM 等慢病检测与报告场景",
+      "支持检测首页、检测历史、指标详情、异常结果、月报和联合解读报告",
+      "集成 BLE 设备扫描、设备绑定、设备管理、多指标检测 SDK 和数据采集流程",
+      "支持二维码/SN 码扫描、OCR 识别、华为扫码、PDF 查看、图片选择与预览",
+      "建设问诊记录、新增问诊、转诊记录、随访提醒、工作列表等医疗服务流程",
+      "集成视频通话、前台音频服务、厂商推送、华为 Push、ShareSDK 分享能力",
+      "通过 AgentWeb、DCloud/UniApp 混合页面承载业务扩展，提升迭代效率",
+      "新增 AI Agent 模块，支持检测、CGM、签约码、患者搜索等自然语言快捷操作",
+      "老架构从 Java + MVP 逐步向 Kotlin + MVVM + Hilt + Room + Coroutines 演进"
+    ],
+    "techStack": ["Kotlin", "Java", "MVP", "MVVM", "Dagger2", "Hilt", "Retrofit", "OkHttp", "RxJava", "Coroutines", "Flow", "GreenDAO", "Room", "BLE", "OCR", "UniApp", "AgentWeb", "Glide", "Fresco", "MPAndroidChart", "Push", "AI Agent", "DeepSeek"],
+    "highlights": ["医疗闭环", "多模块架构", "AI Agent", "BLE 设备", "架构演进"],
+    "screenshots": [],
+    "download": {
+      "github": "",
+      "apk": ""
+    }
+  },
+  {
     "id": "cgm",
     "title": "CGM 持续血糖监测系统",
     "category": "mobile",
