@@ -29,6 +29,34 @@
     }
   },
   {
+    "id": "icgm-pad",
+    "title": "iCGM-APP Pro Android Pad",
+    "category": "mobile",
+    "status": "completed",
+    "company": "三诺生物",
+    "period": "2023.07 - 2023.11",
+    "summary": "面向院内 CGM 场景的 Android Pad 应用，支持病房管理、多设备 BLE 连接、实时监测、报告生成与 SQLCipher 加密的本地闭环。",
+    "description": "面向院内 CGM 连续葡萄糖监测场景的 Android Pad 应用。项目围绕病房/科室、患者建档、设备绑定、实时监测、历史数据同步、异常提醒、报告生成与系统管理等核心流程，提供从患者入院建档到 CGM 设备监测、数据分析、报告导出的本地闭环能力。采用 app + baselibrary 双模块结构，基于 Kotlin/Java 混合开发。",
+    "features": [
+      "账号登录、角色管理、系统设置与本地登录限制",
+      "病房/科室管理、患者新增/详情/出院、腕带号扫码绑定",
+      "BLE 扫描/连接/鉴权/信息读取/校准码写入，最多 6 台设备并发管理",
+      "实时数据接收、历史数据补传、连接状态流与蓝牙日志",
+      "高/低葡萄糖、趋势变化、量程超限、低电量、温度异常等多维度通知",
+      "CGM 趋势图、日内/多日图表、血糖区间背景与监测统计",
+      "本地 H5 报告模板，通过 WebView + JavaScriptInterface 注入数据",
+      "Android PrintManager 导出 PDF，支持 Excel/CSV/PDF 工具能力",
+      "SQLCipher 加密 Room 数据库，ProGuard + 资源压缩发布"
+    ],
+    "techStack": ["Kotlin", "Java", "ViewBinding", "Hilt", "Room", "SQLCipher", "DataStore", "Coroutines", "Flow", "Nordic BLE", "MPAndroidChart", "Huawei ScanKit", "WebView", "JavaScriptInterface", "PrintManager", "Apache POI", "iText", "EventBus", "PermissionX", "Bugly", "ProGuard"],
+    "highlights": ["院内医疗", "Pad 端", "SQLCipher", "多设备 BLE", "H5 报告"],
+    "screenshots": [],
+    "download": {
+      "github": "",
+      "apk": ""
+    }
+  },
+  {
     "id": "cgm",
     "title": "CGM 持续血糖监测系统",
     "category": "mobile",
