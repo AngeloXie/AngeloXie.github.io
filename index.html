@@ -58,6 +58,13 @@
     font-size: 28px; font-weight: 500; margin-bottom: 16px;
   }
   .hero h1 { font-size: 28px; font-weight: 500; margin-bottom: 4px; }
+  .hero .name-row { display: flex; align-items: baseline; justify-content: center; gap: 8px; }
+  .hero .bio-link {
+    font-size: 13px; color: var(--c-framework); cursor: pointer;
+    border-bottom: 1px dashed var(--c-framework); transition: opacity 0.15s;
+    white-space: nowrap;
+  }
+  .hero .bio-link:hover { opacity: 0.7; }
   .hero .subtitle { font-size: 16px; color: var(--text-secondary); margin-bottom: 6px; }
   .hero .meta { font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px; }
   .hero .exp-badge {
@@ -247,6 +254,43 @@
     opacity: 0.35; cursor: not-allowed; pointer-events: none;
   }
 
+  /* ---------- Bio Modal ---------- */
+  .bio-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.25); z-index: 100;
+    justify-content: center; align-items: flex-start;
+    padding: 40px 16px; overflow-y: auto;
+  }
+  .bio-overlay.open { display: flex; }
+  .bio-panel {
+    background: var(--bg); border-radius: var(--radius);
+    max-width: 600px; width: 100%; position: relative;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+    animation: slideUp 0.2s ease;
+  }
+  .bio-header {
+    padding: 24px 28px 0; display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .bio-header h2 { font-size: 18px; font-weight: 500; }
+  .bio-body { padding: 16px 28px 28px; }
+  .bio-body p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .bio-body p:last-child { margin-bottom: 0; }
+  .bio-stats {
+    display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 18px;
+    padding: 16px; background: var(--bg-secondary); border-radius: var(--radius-sm);
+  }
+  .bio-stat .num { font-size: 22px; font-weight: 600; color: var(--c-framework); }
+  .bio-stat .label { font-size: 12px; color: var(--text-tertiary); }
+  .bio-timeline { margin-top: 4px; }
+  .bio-timeline-item {
+    display: flex; gap: 14px; padding: 8px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .bio-timeline-item:last-child { border-bottom: none; }
+  .bio-timeline-item .year { font-size: 13px; color: var(--text-tertiary); white-space: nowrap; min-width: 90px; }
+  .bio-timeline-item .info { font-size: 13px; color: var(--text-secondary); }
+  .bio-timeline-item .info b { color: var(--text); font-weight: 500; }
+
   /* ---------- Footer ---------- */
   .footer {
     text-align: center; padding: 32px 24px;
@@ -264,6 +308,8 @@
     .grid { grid-template-columns: 1fr; }
     .detail-panel { max-width: 100%; border-radius: var(--radius) var(--radius) 0 0; }
     .detail-overlay { align-items: flex-end; padding: 0; }
+    .bio-panel { max-width: 100%; border-radius: var(--radius) var(--radius) 0 0; }
+    .bio-overlay { align-items: flex-end; padding: 0; }
     .tabs { gap: 4px; padding: 20px 0 16px; }
     .tab { font-size: 12px; padding: 5px 12px; }
   }
@@ -275,7 +321,10 @@
 <section class="hero">
   <div class="container">
     <div class="hero-avatar">X</div>
-    <h1>谢雨耕</h1>
+    <div class="name-row">
+      <h1>谢雨耕</h1>
+      <span class="bio-link" onclick="openBio()">关于我</span>
+    </div>
     <p class="subtitle">移动端全栈开发工程师</p>
     <p class="meta">Android · 跨平台 · 医疗 IoT · BLE 蓝牙</p>
     <div class="exp-badge">11 年开发经验</div>
@@ -310,6 +359,40 @@
 <!-- ====== Detail Overlay ====== -->
 <div class="detail-overlay" id="detailOverlay" onclick="if(event.target===this)closeDetail()">
   <div class="detail-panel" id="detailPanel"></div>
+</div>
+
+<!-- ====== Bio Overlay ====== -->
+<div class="bio-overlay" id="bioOverlay" onclick="if(event.target===this)closeBio()">
+  <div class="bio-panel">
+    <div class="bio-header">
+      <h2>关于我</h2>
+      <button class="close-btn" onclick="closeBio()">&times;</button>
+    </div>
+    <div class="bio-body">
+      <div class="bio-stats">
+        <div class="bio-stat"><div class="num">11+</div><div class="label">年开发经验</div></div>
+        <div class="bio-stat"><div class="num">8+</div><div class="label">上线项目</div></div>
+        <div class="bio-stat"><div class="num">5+</div><div class="label">年医疗IoT</div></div>
+        <div class="bio-stat"><div class="num">3+</div><div class="label">跨平台框架</div></div>
+      </div>
+      <p>11 年移动端开发经验，从 Java 时代的原生 Android 起步，逐步拓展到 Kotlin、Flutter、Weex 跨平台及 BLE 医疗 IoT 领域。深耕医疗健康行业 5 年，主导过 CGM 持续血糖监测、分钟诊所等核心产品的架构设计与开发，完成了从 MVP 到 MVVM + Hilt + Coroutines 的架构演进。</p>
+      <p>近期在探索 AI Agent 在移动端的落地实践，集成 DeepSeek 大模型实现自然语言交互能力。技术栈覆盖 Android Native（Kotlin/Java/Compose）、Flutter、Weex+Vue.js、微信小程序，擅长 BLE 蓝牙协议栈、多模块架构、混合开发与架构迁移。</p>
+      <div class="bio-timeline">
+        <div class="bio-timeline-item">
+          <span class="year">2020 - 至今</span>
+          <span class="info"><b>三诺生物</b> · 资深 Android 开发工程师<br>主导 CGM 血糖监测、分钟诊所等医疗健康产品</span>
+        </div>
+        <div class="bio-timeline-item">
+          <span class="year">2017 - 2020</span>
+          <span class="info"><b>正邦集团</b> · Android 开发工程师<br>邦招标(Flutter)、SCM 供应链、邦营销等跨平台项目</span>
+        </div>
+        <div class="bio-timeline-item">
+          <span class="year">2015 - 2017</span>
+          <span class="info"><b>星宇时空</b> · Android 开发组长<br>VR 空间、浩联全球购等商用项目</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ====== Footer ====== -->
@@ -475,8 +558,18 @@ function closeDetail() {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeDetail();
+  if (e.key === 'Escape') { closeDetail(); closeBio(); }
 });
+
+// ====== Bio Modal ======
+function openBio() {
+  document.getElementById('bioOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeBio() {
+  document.getElementById('bioOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
 </script>
 </body>
 </html>
