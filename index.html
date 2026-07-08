@@ -148,8 +148,17 @@
   .card-thumb .category-tag {
     position: absolute; top: 12px; left: 12px;
     font-size: 12px; padding: 4px 12px; border-radius: 12px;
-    font-weight: 500;
+    font-weight: 500; display: inline-flex; gap: 6px; flex-wrap: wrap;
   }
+  .category-tag .tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+  .tag[data-cat="mobile"]    { background: var(--c-mobile-bg);    color: var(--c-mobile); }
+  .tag[data-cat="crossplat"] { background: var(--c-crossplat-bg); color: var(--c-crossplat); }
+  .tag[data-cat="miniapp"]   { background: var(--c-miniapp-bg);   color: var(--c-miniapp); }
+  .tag[data-cat="ai"]        { background: var(--c-ai-bg);        color: var(--c-ai); }
+  .tag[data-cat="auto"]      { background: var(--c-auto-bg);      color: var(--c-auto); }
+  .tag[data-cat="framework"] { background: var(--c-framework-bg);  color: var(--c-framework); }
+  .tag[data-cat="iot"]       { background: var(--c-iot-bg);        color: var(--c-iot); }
+  /* 保留旧的卡片边框色 */
   .cat-mobile .category-tag { background: var(--c-mobile-bg); color: var(--c-mobile); }
   .cat-crossplat .category-tag { background: var(--c-crossplat-bg); color: var(--c-crossplat); }
   .cat-miniapp .category-tag { background: var(--c-miniapp-bg); color: var(--c-miniapp); }
@@ -505,15 +514,19 @@ function render() {
 
   empty.style.display = 'none';
   grid.innerHTML = filtered.map(p => {
-    const primaryCat = getCats(p)[0];
-    const cat = categoryMap[primaryCat] || categoryMap.mobile;
+    const cats = getCats(p);
+    const cat = categoryMap[cats[0]] || categoryMap.mobile;
     const techs = (p.techStack || []).slice(0, 5).map(t => `<span>${t}</span>`).join('');
-    const icon = categoryIcons[primaryCat] || categoryIcons.mobile;
+    const icon = categoryIcons[cats[0]] || categoryIcons.mobile;
+    const catTags = cats.map(c => {
+      const info = categoryMap[c] || categoryMap.mobile;
+      return `<span class="tag" data-cat="${c}">${info.label}</span>`;
+    }).join('');
 
     return `
     <div class="card ${cat.cls}" onclick='openDetail("${p.id}")'>
       <div class="card-thumb">
-        <span class="category-tag">${cat.label}</span>
+        <span class="category-tag">${catTags}</span>
         <div class="placeholder">${icon}<span class="placeholder-text">点击查看详情</span></div>
       </div>
       <div class="card-body">
@@ -531,19 +544,23 @@ function openDetail(id) {
   const p = projects.find(x => x.id === id);
   if (!p) return;
 
-  const primaryCat = getCats(p)[0];
-  const cat = categoryMap[primaryCat] || categoryMap.mobile;
+  const cats = getCats(p);
+  const cat = categoryMap[cats[0]] || categoryMap.mobile;
   const hasGithub = p.download && p.download.github;
   const hasApk = p.download && p.download.apk;
 
   const features = (p.features || []).map(f => `<li>${f}</li>`).join('');
   const techTags = (p.techStack || []).map(t => `<span>${t}</span>`).join('');
   const highlights = (p.highlights || []).map(h => `<span>${h}</span>`).join('');
+  const catTags = cats.map(c => {
+    const info = categoryMap[c] || categoryMap.mobile;
+    return `<span class="tag" data-cat="${c}">${info.label}</span>`;
+  }).join('');
 
   document.getElementById('detailPanel').innerHTML = `
     <div class="detail-header">
       <div>
-        <span class="category-tag cat-${p.category}" style="font-size:12px;padding:3px 10px;border-radius:12px;font-weight:500;display:inline-block;margin-bottom:6px;">${cat.label}</span>
+        <span class="category-tag" style="display:inline-flex;gap:6px;margin-bottom:6px;">${catTags}</span>
         <h2>${p.title}</h2>
       </div>
       <button class="close-btn" onclick="closeDetail()">&times;</button>
