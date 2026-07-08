@@ -31,6 +31,8 @@
     --c-auto-bg: #F1EFE8;
     --c-framework: #7F77DD;
     --c-framework-bg: #EEEDFE;
+    --c-iot: #0D9488;
+    --c-iot-bg: #E6F7F5;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -103,6 +105,7 @@
   .tab[data-cat="ai"].active { background: var(--c-ai-bg); color: var(--c-ai); border-color: var(--c-ai); }
   .tab[data-cat="auto"].active { background: var(--c-auto-bg); color: var(--c-auto); border-color: var(--c-auto); }
   .tab[data-cat="framework"].active { background: var(--c-framework-bg); color: var(--c-framework); border-color: var(--c-framework); }
+  .tab[data-cat="iot"].active { background: var(--c-iot-bg); color: var(--c-iot); border-color: var(--c-iot); }
 
   .tab .count {
     font-size: 11px; margin-left: 4px; opacity: 0.6;
@@ -153,6 +156,7 @@
   .cat-ai .category-tag { background: var(--c-ai-bg); color: var(--c-ai); }
   .cat-auto .category-tag { background: var(--c-auto-bg); color: var(--c-auto); }
   .cat-framework .category-tag { background: var(--c-framework-bg); color: var(--c-framework); }
+  .cat-iot .category-tag { background: var(--c-iot-bg); color: var(--c-iot); }
 
   .card-body { padding: 16px 18px; }
   .card-body .company { font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px; }
@@ -356,6 +360,7 @@
   <span class="tab" data-cat="crossplat">跨平台<span class="count" id="count-crossplat"></span></span>
   <span class="tab" data-cat="miniapp">小程序<span class="count" id="count-miniapp"></span></span>
   <span class="tab" data-cat="ai">AI<span class="count" id="count-ai"></span></span>
+  <span class="tab" data-cat="iot">IoT<span class="count" id="count-iot"></span></span>
   <span class="tab" data-cat="auto">车载<span class="count" id="count-auto"></span></span>
   <span class="tab" data-cat="framework">Framework<span class="count" id="count-framework"></span></span>
 </div>
@@ -427,7 +432,8 @@ const categoryMap = {
   miniapp:  { label: '小程序',    cls: 'cat-miniapp' },
   ai:       { label: 'AI',        cls: 'cat-ai' },
   auto:     { label: '车载',      cls: 'cat-auto' },
-  framework:{ label: 'Framework', cls: 'cat-framework' }
+  framework:{ label: 'Framework', cls: 'cat-framework' },
+  iot:      { label: 'IoT',       cls: 'cat-iot' }
 };
 
 const categoryIcons = {
@@ -436,11 +442,14 @@ const categoryIcons = {
   miniapp: '<svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="13" stroke="#378ADD" stroke-width="1.2" fill="none"/><circle cx="18" cy="18" r="5" stroke="#378ADD" stroke-width="1.2" fill="none"/></svg>',
   ai: '<svg width="36" height="36" viewBox="0 0 36 36"><polygon points="18,2 22,12 33,12 24,18 28,28 18,22 8,28 12,18 3,12 14,12" stroke="#E24B4A" stroke-width="1.2" fill="none" stroke-linejoin="round"/></svg>',
   auto: '<svg width="36" height="36" viewBox="0 0 36 36"><rect x="4" y="12" width="28" height="14" rx="4" stroke="#888780" stroke-width="1.2" fill="none"/><circle cx="11" cy="26" r="3" stroke="#888780" stroke-width="1.2" fill="none"/><circle cx="25" cy="26" r="3" stroke="#888780" stroke-width="1.2" fill="none"/></svg>',
-  framework: '<svg width="36" height="36" viewBox="0 0 36 36"><rect x="3" y="3" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/><rect x="21" y="3" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/><rect x="3" y="21" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/><rect x="21" y="21" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/></svg>'
+  framework: '<svg width="36" height="36" viewBox="0 0 36 36"><rect x="3" y="3" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/><rect x="21" y="3" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/><rect x="3" y="21" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/><rect x="21" y="21" width="12" height="12" rx="1.5" stroke="#7F77DD" stroke-width="1.2" fill="none"/></svg>',
+  iot: '<svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="10" stroke="#0D9488" stroke-width="1.2" fill="none"/><circle cx="18" cy="18" r="4" stroke="#0D9488" stroke-width="1.2" fill="none"/><line x1="18" y1="4" x2="18" y2="8" stroke="#0D9488" stroke-width="1.2"/><line x1="18" y1="28" x2="18" y2="32" stroke="#0D9488" stroke-width="1.2"/><line x1="4" y1="18" x2="8" y2="18" stroke="#0D9488" stroke-width="1.2"/><line x1="28" y1="18" x2="32" y2="18" stroke="#0D9488" stroke-width="1.2"/></svg>'
 };
 
 let projects = [];
 let activeCat = 'all';
+
+function getCats(p) { return p.categories || [p.category]; }
 
 // ====== Load ======
 fetch('projects.json')
@@ -470,9 +479,10 @@ document.getElementById('tabs').addEventListener('click', e => {
 function updateCounts() {
   const counts = { all: projects.length };
   projects.forEach(p => {
-    counts[p.category] = (counts[p.category] || 0) + 1;
+    const cats = getCats(p);
+    cats.forEach(c => { counts[c] = (counts[c] || 0) + 1; });
   });
-  ['all','mobile','crossplat','miniapp','ai','auto','framework'].forEach(cat => {
+  ['all','mobile','crossplat','miniapp','ai','iot','auto','framework'].forEach(cat => {
     const el = document.getElementById('count-' + cat);
     if (el) el.textContent = '(' + (counts[cat] || 0) + ')';
   });
@@ -482,7 +492,7 @@ function updateCounts() {
 function render() {
   const filtered = activeCat === 'all'
     ? projects
-    : projects.filter(p => p.category === activeCat);
+    : projects.filter(p => getCats(p).includes(activeCat));
 
   const grid = document.getElementById('projectGrid');
   const empty = document.getElementById('emptyState');
@@ -495,9 +505,10 @@ function render() {
 
   empty.style.display = 'none';
   grid.innerHTML = filtered.map(p => {
-    const cat = categoryMap[p.category] || categoryMap.mobile;
+    const primaryCat = getCats(p)[0];
+    const cat = categoryMap[primaryCat] || categoryMap.mobile;
     const techs = (p.techStack || []).slice(0, 5).map(t => `<span>${t}</span>`).join('');
-    const icon = categoryIcons[p.category] || categoryIcons.mobile;
+    const icon = categoryIcons[primaryCat] || categoryIcons.mobile;
 
     return `
     <div class="card ${cat.cls}" onclick='openDetail("${p.id}")'>
@@ -520,7 +531,8 @@ function openDetail(id) {
   const p = projects.find(x => x.id === id);
   if (!p) return;
 
-  const cat = categoryMap[p.category] || categoryMap.mobile;
+  const primaryCat = getCats(p)[0];
+  const cat = categoryMap[primaryCat] || categoryMap.mobile;
   const hasGithub = p.download && p.download.github;
   const hasApk = p.download && p.download.apk;
 

@@ -36,6 +36,7 @@
     "id": "icgm-pad",
     "title": "iCGM-APP Pro Android Pad",
     "category": "mobile",
+    "categories": ["mobile", "iot"],
     "status": "completed",
     "company": "三诺生物",
     "period": "2023.07 - 2023.11",
@@ -64,6 +65,7 @@
     "id": "cgm",
     "title": "CGM 持续血糖监测系统",
     "category": "mobile",
+    "categories": ["mobile", "iot"],
     "status": "online",
     "company": "三诺生物",
     "period": "2020.05 - 至今",
@@ -79,6 +81,36 @@
     ],
     "techStack": ["Kotlin", "Java", "BLE", "MVVM", "Room", "Retrofit", "OkHttp", "Coroutines", "Flow", "Jetpack Compose", "Dagger", "Hilt", "LiveData", "ViewModel"],
     "highlights": ["医疗合规", "蓝牙协议栈", "0→1 全流程", "架构演进"],
+    "screenshots": [],
+    "download": {
+      "github": "",
+      "apk": ""
+    }
+  },
+  {
+    "id": "spug",
+    "title": "SPUG Diary App Android",
+    "category": "mobile",
+    "categories": ["mobile", "iot"],
+    "status": "completed",
+    "company": "三诺生物",
+    "period": "2021.08 - 2022.06",
+    "summary": "面向三诺 SPUG 血糖/尿酸检测设备的 Android 应用，通过 Type-C OTG/HID 协议实现设备通信、检测流程与数据管理。",
+    "description": "面向三诺 SPUG 血糖/尿酸检测设备的 Android 移动端应用。项目围绕 Type-C OTG 设备连接、HID 数据通信、血糖/尿酸检测、结果展示、历史记录、本地数据存储与第三方授权取数等流程，提供从设备插入、试条检测、吸样提示、倒计时、结果解析到数据保存的完整闭环。采用 app + baselibrary + spug-otg-hid 多模块结构，支持中英文界面与离线使用。",
+    "features": [
+      "Type-C OTG 接入，基于 VID/PID 识别目标 USB HID 设备",
+      "USB 权限申请、设备插拔监听、轮询重连与连接状态回调",
+      "HID 指令通信：设备握手、时间同步、命令下发与结果应答",
+      "血糖、尿酸双检测场景，自动识别插条后测试模式",
+      "血液/质控液样本选择，工厂模式标准条测试入口",
+      "实时展示检测步骤：插入设备→插入试条→检测中→吸入血样→完成",
+      "温度超限、吸样超时、校正码错误、通讯失败等异常处理",
+      "Room 本地数据库保存，血糖/尿酸分类查询与分页加载",
+      "中英文资源、图文帮助流程、用户协议与隐私弹窗",
+      "第三方 App 授权取数，通过 EventBus/Gson 回传检测结果"
+    ],
+    "techStack": ["Java", "Android SDK", "AndroidX", "DataBinding", "USB Host API", "HID", "Room", "SQLite", "LocalBroadcastManager", "EventBus", "RecyclerView", "ViewPager", "SwipeRefreshLayout", "ButterKnife", "RxPermissions", "Glide", "OkHttp", "Retrofit", "RxJava"],
+    "highlights": ["OTG/HID", "医疗设备", "多模块", "离线可用"],
     "screenshots": [],
     "download": {
       "github": "",
